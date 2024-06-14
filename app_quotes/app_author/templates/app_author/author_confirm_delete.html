@@ -1,0 +1,18 @@
+{% extends 'app_quotes/base.html' %}
+
+{% block title %}
+  <title>Del Author</title>
+{% endblock %}
+
+{% block content %}
+  <div class="container-xxl">
+    {% comment %} <h1 class="fs-3 fw-bold">Add Autho</h1> {% endcomment %}
+    <h1 class="fs-3 fw-bold">Are you sure you want to delete Author "{{ object.fullname }}"</h1>
+
+    <form method="post" class="mt-4">
+      {% csrf_token %}
+      <button type="submit" class="btn btn-danger me-3">Yes, delete</button>
+      <a href="{% url 'app_author:author_list' %}" class="btn btn-primary">Cancel</a>
+    </form>
+  </div>
+{% endblock %}

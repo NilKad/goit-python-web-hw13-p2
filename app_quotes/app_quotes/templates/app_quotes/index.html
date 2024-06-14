@@ -1,0 +1,40 @@
+{% extends 'app_quotes/base.html' %}
+
+{% block content %}
+  <div class="container-xxl mt-5">
+    {% for quote in page_obj %}
+      <div class="card mb-5">
+        <div class="card-body">
+          <p class="card-text fs-5 fst-italic mb-2">{{ quote.quote }}</p>
+          <p class="card-title mb-2">
+            by <a class="text-primary fw-bold " href="{% url 'home' %}?author_id={{ quote.author.pk }}">{{ quote.author.fullname }}</a>
+            <a href="{{ quote.author_detail_url }}" class="card-link">(about)</a>
+          </p>
+          <p class="card-title">
+            Tags:{% for tag in quote.tag_list %}
+              <a class="btn btn-primary btn-sm" style="--bs-btn-padding-y: .1rem; --bs-btn-padding-x: .25rem; --bs-btn-font-size: .75rem;" href="{% url 'quote_list' %}?tag={{ tag }}">{{ tag }}</a>{% if not forloop.last %} {% endif %}
+            {% endfor %}
+          </p>
+        </div>
+      </div>
+    {% endfor %}
+    <div class="d-flex justify-content-between align-items-center pt-2 pb-2 mb-5">
+      {% if page_obj.has_previous %}
+        <a href="?page={{ page_obj.previous_page_number }}" class="btn btn-outline-primary rounded-pill">Previous</a>
+      {% else %}
+        <a href="" class="btn btn-outline-secondary rounded-pill disabled">Previous</a>
+      {% endif %}
+
+      <span>Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+
+      {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}" class="btn btn-outline-primary rounded-pill">Next</a>
+      {% else %}
+        <a href="" class="btn btn-outline-secondary rounded-pill disabled">Next</a>
+      {% endif %}
+    </div>
+  </div>
+  <div class="bg-light p-2">
+    <div class="container-xxl"></div>
+  </div>
+{% endblock %}
